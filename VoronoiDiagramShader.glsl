@@ -34,9 +34,9 @@ float voronoi(vec2 i_stP, vec2 f_stP, vec2 stP, float scalarP)
     vec2 mousePoint = u_mouse/u_resolution*scalarP;
     vec2 diffMouse = mousePoint - stP;
     float distMouse = length(diffMouse);
-    if(distMouse * m_distP < m_distP)
+    if(distMouse*m_distP  < m_distP)
     {
-        m_distP = distMouse * m_distP;
+        m_distP = distMouse*m_distP ;
     }
     return m_distP;
 }
@@ -44,7 +44,6 @@ void main()
 {
     vec2 st = gl_FragCoord.xy/u_resolution.xy;
     st.x *= u_resolution.x/u_resolution.y;
-    vec3 color = vec3(.0);
 
     float scalar = 10.;
     st *= scalar;
@@ -54,9 +53,21 @@ void main()
 
     float m_dist = voronoi(i_st, f_st, st, scalar);
 
+
+    vec3 color = vec3(0.,.0,.0);
     color += m_dist/0.1;
-    // Draw cell center
-    //color -= 1.-step(.02, m_dist);
+
+
+    //Color tests
+    
+    // vec3 color = vec3(0.,.49,.5);
+    // color -= m_dist/0.1;
+
+
+    // vec3 color = vec3(0.,.4,0.5);
+    // color.r = m_dist;
+    
+
     // Draw grid
     //color.r += step(.98, f_st.x) + step(.98, f_st.y);
 
